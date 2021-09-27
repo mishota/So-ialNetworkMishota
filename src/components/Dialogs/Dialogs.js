@@ -7,11 +7,11 @@ import { updateNewMessageBodyCreator, sendMessageCreator } from '../../redax/dia
 
 const Dialogs = (props) => {
 
-   let state = props.store.getState().dialogsPage;
+   // let state = props.store.getState().dialogsPage;
 
-   let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} />);
-   let messageElements = state.messages.map(m => <Message id={m.id} message={m.message} />);
-   let newMessageBody = state.newMessageBody;
+   let dialogsElements = props.dialogs.map(d => <DialogItem name={d.name} id={d.id} />);
+   let messageElements = props.messages.map(m => <Message id={m.id} message={m.message} />);
+   let newMessageBody = props.newMessageBody;
 
    // let newMessage = React.createRef();
    // let addNewMessage = () => {
@@ -19,12 +19,13 @@ const Dialogs = (props) => {
    //    alert(text);
    // }
    let onSendMessageClick = () => {
-      props.store.dispatch(sendMessageCreator());
+      props.sendMessage();
+      // props.store.dispatch(sendMessageCreator());
    }
    let onNewMessageChange = (e) => {
-      debugger;
       let body = e.target.value;
-      props.store.dispatch(updateNewMessageBodyCreator(body));
+      props.updateNewMessageBody(body);
+      // props.store.dispatch(updateNewMessageBodyCreator(body));
    }
    return (
       <div className={c.dialogs}>

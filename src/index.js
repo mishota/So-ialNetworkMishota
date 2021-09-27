@@ -4,20 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redax/state'
+import { BrowserRouter, Route } from 'react-router-dom';
 
 
 
 
 
 
-export let rerenderEntireTree = () => {
+let rerenderEntireTree = (state) => {
   ReactDOM.render(
     <React.StrictMode>
+      <BrowserRouter>
       <App
-        state={store.getState()}
-        addPost={store.addPost.bind(store)}
-        updateNewPostText={store.updateNewPostText.bind(store)}
+        state={state}
+        dispatch={store.dispatch.bind(store)}
+        store={store}
       />
+      </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
   );

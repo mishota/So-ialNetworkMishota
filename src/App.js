@@ -11,27 +11,30 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 function App(props) {
   return (
-    <BrowserRouter>
-      <div className='app-wrapper'>
-        <Header />
-        <Navbar />
-        {/* <Profile /> */}
-        <div className='app-wrapper-content'>
-          <Route path='/profile'
-            render={() => <Profile
-              profilePage={props.state.profilePage}
-              addPost={props.addPost}
-              updateNewPostText={props.updateNewPostText}
-            />}
-          />
-          <Route path='/dialogs'
-            render={() => <Dialogs
-              dialogs={props.state.messagesPage.dialogs}
-              messages={props.state.messagesPage.messages} />} />
 
-        </div>
+    <div className='app-wrapper'>
+      <Header />
+      <Navbar />
+      {/* <Profile /> */}
+      <div className='app-wrapper-content'>
+        <Route path='/dialogs'
+          render={() => <Dialogs
+            store={props.store}
+          // dialogs={props.state.messagesPage.dialogs}
+          // messages={props.state.messagesPage.messages}
+          />}
+        /> 
+        <Route path='/profile'
+          render={() => <Profile
+            profilePage={props.state.profilePage}
+            dispatch={props.dispatch}
+          />}
+        />
+
+
       </div>
-    </BrowserRouter>
+    </div>
+
   );
 }
 

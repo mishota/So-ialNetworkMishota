@@ -2,7 +2,10 @@ import React from "react";
 import state from "../../../redax/state";
 import Post from "../Post/Post";
 import c from './MyPosts.module.css';
+import { addPostActionCreator, updateNewPostActionCreator } from "../../../redax/state";
 window.state = state;
+
+
 
 const MyPosts = (props) => {
 
@@ -10,11 +13,12 @@ const MyPosts = (props) => {
    let newPostElement = React.createRef();
    let addPost = () => {
       let text = newPostElement.current.value;
-      props.addPost(text);
+      props.dispatch(addPostActionCreator());
    }
    let postOnChange = () => {
       let text = newPostElement.current.value;
-      props.updateNewPostText(text);
+      let action = updateNewPostActionCreator(text);
+      props.dispatch(action);
    }
    return (
       <div className={c.postsBlock}>

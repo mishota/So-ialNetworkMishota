@@ -1,17 +1,17 @@
 import React from 'react'
 import c from './Dialogs.module.css';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message';
-import { updateNewMessageBodyCreator, sendMessageCreator } from '../../redax/dialogReducer';
+// import { updateNewMessageBodyCreator, sendMessageCreator } from '../../redax/dialogReducer';
 
 const Dialogs = (props) => {
 
    // let state = props.store.getState().dialogsPage;
 
-   let dialogsElements = props.dialogs.map(d => <DialogItem name={d.name} id={d.id} />);
-   let messageElements = props.messages.map(m => <Message id={m.id} message={m.message} />);
-   let newMessageBody = props.newMessageBody;
+   let dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id} />);
+   let messageElements = props.dialogsPage.messages.map(m => <Message id={m.id} key={m.id} message={m.message} />);
+   let newMessageBody = props.dialogsPage.newMessageBody;
 
    // let newMessage = React.createRef();
    // let addNewMessage = () => {

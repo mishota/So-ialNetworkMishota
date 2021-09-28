@@ -9,10 +9,11 @@ import c from './MyPosts.module.css';
 
 
 const MyPosts = (props) => {
-
+   debugger;
    let postsElement = props.posts.map(p => <Post message={p.message} LikeCount={p.LikeCount} />)
    let newPostElement = React.createRef();
    let onAddPost = () => {
+
       // let text = newPostElement.current.value;
       props.addPost();
       // props.dispatch(addPostActionCreator());

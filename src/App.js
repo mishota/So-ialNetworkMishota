@@ -19,14 +19,14 @@ function App(props) {
       <div className='app-wrapper-content'>
         <Route path='/dialogs'
           render={() => <DialogsContainer
-            store={props.store}
+          // store={props.store}
           // dialogs={props.state.messagesPage.dialogs}
           // messages={props.state.messagesPage.messages}
           />}
         />
         <Route path='/profile'
           render={() => <Profile
-            store={props.store}
+            // store={props.store}
           // profilePage={props.state.profilePage}
           // dispatch={props.dispatch}
           />}

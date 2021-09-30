@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 // import state from "../../../redax/reduxStore";
 // import Post from "../Post/Post";
 // import c from './MyPosts.module.css';
-import { addPostActionCreator, updateNewPostActionCreator } from "../../../redax/profileReducer.js";
+import { addPostActionCreator, updateNewPostActionCreator } from "../../../redux/profileReducer.js";
 import MyPosts from "./MyPosts";
 
 

@@ -10,9 +10,8 @@ import UsersContainer from './Users/UsersContainer';
 
 
 
-function App(props) {
+const App = () => {
   return (
-
     <div className='app-wrapper'>
       <Header />
       <Navbar />
@@ -39,7 +38,7 @@ function App(props) {
       </div>
     </div>
 
-  );
+  )
 }
 
 export default App;

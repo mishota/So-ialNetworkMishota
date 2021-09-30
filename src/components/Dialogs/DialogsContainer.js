@@ -3,7 +3,7 @@ import React from 'react'
 // import { NavLink } from 'react-router-dom';
 // import DialogItem from './DialogItem/DialogItem'
 // import Message from './Message/Message';
-import { updateNewMessageBodyCreator, sendMessageCreator } from '../../redax/dialogReducer';
+import { updateNewMessageBodyCreator, sendMessageCreator } from '../../redux/dialogReducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
 

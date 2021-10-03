@@ -77,7 +77,7 @@ const usersReducer = (state = initialState, action) => {
 export const follow = (userId) => ({ type: FOLLOW, userId })
 export const unFollow = (userId) => ({ type: UN_FOLLOW, userId })
 export const setUsers = (users) => {
-   debugger; return (
+   return (
       { type: SET_USERS, users }
    )
 }

@@ -3,11 +3,11 @@ import Preloader from "../../common/Preloader/Preloader";
 import c from './ProfileInfo.module.css';
 
 const ProfileInfo = (props) => {
-   debugger;
-   if (!props.profile) {
-      return (<Preloader />)
-   }
    // debugger;
+   if (!props.profile) {
+      return (<Preloader />);
+   }
+
    return (
       <div>
          <div>
@@ -15,10 +15,11 @@ const ProfileInfo = (props) => {
          </div>
          <div className={c.descriptionBlock}>
             <img src={props.profile.photos.large} className={c.profileInfo} />
+            <div>{props.profile.fullName}</div>
             ava + Description
          </div>
       </div>
-   )
+   );
 }
 
 export default ProfileInfo;

@@ -15,6 +15,11 @@ import Preloader from '../components/common/Preloader/Preloader';
 class UsersContainer extends React.Component {
    constructor(props) {
       super(props);
+      // this.getUsers();
+   }
+
+   componentDidMount() {
+      // debugger;
       this.getUsers();
    }
 

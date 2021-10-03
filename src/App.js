@@ -1,19 +1,19 @@
 import './App.css';
 import react from 'react';
-
-import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Profile from './components/Profile/Profile';
+// import Profile from './components/Profile/Profile';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import { BrowserRouter, Route } from 'react-router-dom';
 import UsersContainer from './Users/UsersContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
+import HeaderContainer from './components/Header/HeaderContainer';
 
 
 
 const App = () => {
   return (
     <div className='app-wrapper'>
-      <Header />
+      <HeaderContainer/>
       <Navbar />
       {/* <Profile /> */}
       <div className='app-wrapper-content'>
@@ -24,8 +24,8 @@ const App = () => {
           // messages={props.state.messagesPage.messages}
           />}
         />
-        <Route path='/profile'
-          render={() => <Profile
+        <Route path='/profile/:userId?'
+          render={() => <ProfileContainer
           // store={props.store}
           // profilePage={props.state.profilePage}
           // dispatch={props.dispatch}

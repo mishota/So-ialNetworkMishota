@@ -11,6 +11,8 @@ import * as axios from 'axios';
 import Users from './Users';
 import Preloader from '../components/common/Preloader/Preloader';
 import { UserApi } from '../api/api';
+import { compose } from 'redux';
+import { withAuthRedirectComponent } from '../HOC/withAuthRedirectComponent';
 
 
 class UsersContainer extends React.Component {
@@ -116,8 +118,17 @@ let mapStateToProps = (state) => {
 //    follow, unFollow, setUsers, setCurrentPage,
 //    setTotalUsersCount, toggleIsFetching, toggleFollowingProcess
 // })(UsersContainer);
-export default connect(mapStateToProps, {
-   follow, unFollow, setCurrentPage,
-   toggleFollowingProcess,
-   getUsers,
-})(UsersContainer);
+// export default connect(mapStateToProps, {
+//    follow, unFollow, setCurrentPage,
+//    toggleFollowingProcess,
+//    getUsers,
+// })(UsersContainer);
+
+export default compose(
+   withAuthRedirectComponent,
+   connect(mapStateToProps, {
+      follow, unFollow, setCurrentPage,
+      toggleFollowingProcess,
+      getUsers,
+   })
+)(UsersContainer);

@@ -7,6 +7,7 @@ import Preloader from '../../components/common/Preloader/Preloader.js';
 import { Redirect, withRouter } from "react-router";
 // import { UserApi } from "../../api/api";
 import { withAuthRedirectComponent } from "../../HOC/withAuthRedirectComponent";
+import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
    // constructor(props) {
@@ -52,7 +53,10 @@ class ProfileContainer extends React.Component {
 //    if (!this.props.isAuth) return <Redirect to={"/Login"} />;
 //    return <ProfileContainer {...props} /> //пропсы прокинем дальше
 // }
-let AuthRedirectComponent = withAuthRedirectComponent(ProfileContainer); //создаем с помощью HOC
+
+
+// let AuthRedirectComponent = withAuthRedirectComponent(ProfileContainer); //создаем с помощью HOC
+
 // let mapStateToPropsForRedirect = (state) => {
 //    return {
 //       isAuth: state.auth.isAuth,
@@ -67,6 +71,12 @@ let mapStateToProps = (state) => {
    }
 }
 
-let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent);
+// let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent);
 
-export default connect(mapStateToProps, { getUserProfile })(WithUrlDataContainerComponent); 
+// export default connect(mapStateToProps, { getUserProfile })(WithUrlDataContainerComponent);
+
+export default compose(
+   connect(mapStateToProps, { getUserProfile }),
+   withAuthRedirectComponent,
+   withRouter
+)(ProfileContainer);

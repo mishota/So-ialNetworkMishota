@@ -3,7 +3,8 @@ import React from 'react';
 import styles from "./Users.module.css";
 import userPhoto from "../Assets/Images/user.png";
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+// import { UserApi } from '../api/api';
 
 
 let Users = (props) => {
@@ -37,37 +38,43 @@ let Users = (props) => {
                      </div>
                      <div>
                         {u.followed
-                           ? <button disabled={props.followingInProcess.some(id => id === u.id)} onClick={() => {
-                              props.toggleFollowingProcess(true, u.id);
-                              axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                 withCredentials: true,
-                                 headers: {
-                                    "API-KEY": "c41f8ab0-ce0f-434c-98ce-6c7922a87f66",
-                                 }
-                              })
-                                 .then(response => {
-                                    if (response.data.resultCode == 0) {
-                                       props.unFollow(u.id)
-                                    }
-                                    props.toggleFollowingProcess(false, u.id);
-                                 });
-                           }}  >Unfollow</button>
+                           ? <button disabled={props.followingInProcess.some(id => id === u.id)}
+                              onClick={() => {
+                                 // props.toggleFollowingProcess(true, u.id);
+                                 // // axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                 // //    withCredentials: true,
+                                 // //    headers: {
+                                 // //       "API-KEY": "c41f8ab0-ce0f-434c-98ce-6c7922a87f66",
+                                 // //    }
+                                 // // })
+                                 // UserApi.unfollow(u.id)
+                                 //    .then(response => {
+                                 //       if (response.data.resultCode == 0) {
+                                 //          props.unFollow(u.id)
+                                 //       }
+                                 //       props.toggleFollowingProcess(false, u.id);
+                                 //    });
+                                 props.unFollow(u.id);
+                              }}  >UnFollow</button>
 
-                           : <button disabled={props.followingInProcess.some(id => id === u.id)} onClick={() => {
-                              props.toggleFollowingProcess(true, u.id);
-                              axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
-                                 withCredentials: true,
-                                 headers: {
-                                    "API-KEY": "c41f8ab0-ce0f-434c-98ce-6c7922a87f66",
-                                 }
-                              })
-                                 .then(response => {
-                                    if (response.data.resultCode == 0) {
-                                       props.follow(u.id)
-                                    }
-                                    props.toggleFollowingProcess(false, u.id);
-                                 });
-                           }}  >Follow</button>}
+                           : <button disabled={props.followingInProcess.some(id => id === u.id)}
+                              onClick={() => {
+                                 // props.toggleFollowingProcess(true, u.id);
+                                 // // axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                                 // //    withCredentials: true,
+                                 // //    headers: {
+                                 // //       "API-KEY": "c41f8ab0-ce0f-434c-98ce-6c7922a87f66",
+                                 // //    }
+                                 // // })
+                                 // UserApi.follow(u.id)
+                                 //    .then(response => {
+                                 //       if (response.data.resultCode == 0) {
+                                 //          props.follow(u.id)
+                                 //       }
+                                 //       props.toggleFollowingProcess(false, u.id);
+                                 //    });
+                                 props.unFollow(u.id);
+                              }}  >Follow</button>}
 
                      </div>
                   </span>

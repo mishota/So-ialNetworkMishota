@@ -1,5 +1,5 @@
 import './App.css';
-import react from 'react';
+import React from 'react';
 import Navbar from './components/Navbar/Navbar';
 // import Profile from './components/Profile/Profile';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
@@ -7,13 +7,14 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import UsersContainer from './Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
+import LoginPage from './components/Login/Login';
 
 
 
 const App = () => {
   return (
     <div className='app-wrapper'>
-      <HeaderContainer/>
+      <HeaderContainer />
       <Navbar />
       {/* <Profile /> */}
       <div className='app-wrapper-content'>
@@ -33,6 +34,9 @@ const App = () => {
         />
         <Route path='/users'
           render={() => <UsersContainer />}
+        />
+        <Route path='/login'
+          render={() => <LoginPage />}
         />
 
       </div>

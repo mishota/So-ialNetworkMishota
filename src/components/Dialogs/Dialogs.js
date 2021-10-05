@@ -3,6 +3,7 @@ import c from './Dialogs.module.css';
 // import { NavLink } from 'react-router-dom';
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 // import { updateNewMessageBodyCreator, sendMessageCreator } from '../../redax/dialogReducer';
 
 const Dialogs = (props) => {
@@ -27,6 +28,8 @@ const Dialogs = (props) => {
       props.updateNewMessageBody(body);
       // props.store.dispatch(updateNewMessageBodyCreator(body));
    }
+
+   if (!props.isAuth) return <Redirect to={"/Login"} />;
    return (
       <div className={c.dialogs}>
          <div className={c.dialogsItems}>

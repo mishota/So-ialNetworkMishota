@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-   follow, setUsers, unFollow,
-   setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingProcess
+   follow, unFollow,
+   setCurrentPage, toggleFollowingProcess, getUsers
 } from '../redux/usersReducer';
 import * as axios from 'axios';
 
@@ -10,40 +10,46 @@ import * as axios from 'axios';
 // import userPhoto from "../Assets/Images/user.png";
 import Users from './Users';
 import Preloader from '../components/common/Preloader/Preloader';
-import { getUsers, UserApi } from '../api/api';
+import { UserApi } from '../api/api';
 
 
 class UsersContainer extends React.Component {
-   constructor(props) {
-      super(props);
-      // this.getUsers();
-   }
+   // constructor(props) {
+   //    super(props);
+   //    // this.getUsers();
+   // }
 
    componentDidMount() {
-      // debugger;
-      this.getUsers();
+      // this.props.toggleIsFetching(true);
+      // UserApi.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
+      //    this.props.toggleIsFetching(false);
+      //    this.props.setUsers(data.items);
+      //    this.props.setTotalUsersCount(data.totalCount);
+      // });
+      this.props.getUsers(this.props.currentPage, this.props.pageSize)
    }
 
-   getUsers = () => {
-      // debugger;
-      // if (this.props.users.length === 0) {
-      this.props.toggleIsFetching(true);
-      UserApi.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-         this.props.toggleIsFetching(false);
-         this.props.setUsers(data.items);
-         this.props.setTotalUsersCount(data.totalCount);
-      });
-      // }
-   }
+   // getUsers = () => {
+   //    // debugger;
+   //    // if (this.props.users.length === 0) {
+   //    this.props.toggleIsFetching(true);
+   //    UserApi.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
+   //       this.props.toggleIsFetching(false);
+   //       this.props.setUsers(data.items);
+   //       this.props.setTotalUsersCount(data.totalCount);
+   //    });
+   //    // }
+   // }
 
    onPageChanged = (pageNumber) => {
-      this.props.setCurrentPage(pageNumber);
-      this.props.toggleIsFetching(true);
-      UserApi.getUsers(pageNumber, this.props.pageSize).then(data => {
-         this.props.toggleIsFetching(false);
-         this.props.setUsers(data.items);
+      // this.props.setCurrentPage(pageNumber);
+      // this.props.toggleIsFetching(true);
+      // UserApi.getUsers(pageNumber, this.props.pageSize).then(data => {
+      //    this.props.toggleIsFetching(false);
+      //    this.props.setUsers(data.items);
 
-      });
+      // });
+      this.props.getUsers(pageNumber, this.props.pageSize)
    }
 
    render() {
@@ -105,7 +111,13 @@ let mapStateToProps = (state) => {
 
 
 // export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+
+// export default connect(mapStateToProps, {
+//    follow, unFollow, setUsers, setCurrentPage,
+//    setTotalUsersCount, toggleIsFetching, toggleFollowingProcess
+// })(UsersContainer);
 export default connect(mapStateToProps, {
-   follow, unFollow, setUsers, setCurrentPage,
-   setTotalUsersCount, toggleIsFetching, toggleFollowingProcess
+   follow, unFollow, setCurrentPage,
+   toggleFollowingProcess,
+   getUsers,
 })(UsersContainer);

@@ -1,4 +1,5 @@
 import { act } from "react-dom/test-utils";
+import { UserApi } from "../api/api"
 
 const FOLLOW = 'FOLLOW';
 const UN_FOLLOW = 'UN_FOLLOW';
@@ -77,7 +78,7 @@ const usersReducer = (state = initialState, action) => {
             ...state,
             followingInProcess: action.isFetching
                ? [...state.followingInProcess, action.userId]
-               : state.followingInProcess.filter(id => id !=action.userId)
+               : state.followingInProcess.filter(id => id != action.userId)
          }
 
 
@@ -86,8 +87,8 @@ const usersReducer = (state = initialState, action) => {
    }
 }
 
-export const follow = (userId) => ({ type: FOLLOW, userId })
-export const unFollow = (userId) => ({ type: UN_FOLLOW, userId })
+export const followSuccess = (userId) => ({ type: FOLLOW, userId })
+export const unFollowSuccess = (userId) => ({ type: UN_FOLLOW, userId })
 export const setUsers = (users) => {
    return (
       { type: SET_USERS, users }
@@ -98,4 +99,41 @@ export const setTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_
 export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching })
 export const toggleFollowingProcess = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING, isFetching, userId })
 
+
+export const getUsers = (currentPage, pageSize) => {   //thunk creator
+   return (dispatch) => {   //thunk
+      dispatch(toggleIsFetching(true));
+      UserApi.getUsers(currentPage, pageSize).then(data => {
+         dispatch(toggleIsFetching(false));
+         dispatch(setUsers(data.items));
+         dispatch(setTotalUsersCount(data.totalCount));
+      });
+   }
+}
+
+export const follow = (userId) => {   //thunk creator
+   return (dispatch) => {   //thunk
+      dispatch(toggleFollowingProcess(true, userId));
+      UserApi.follow(userId)
+         .then(response => {
+            if (response.data.resultCode == 0) {
+               dispatch(followSuccess(userId));
+            }
+            dispatch(toggleFollowingProcess(false, userId));
+         });
+   }
+}
+
+export const unFollow = (userId) => {   //thunk creator
+   return (dispatch) => {   //thunk
+      dispatch(toggleFollowingProcess(true, userId));
+      UserApi.unFollow(userId)
+         .then(response => {
+            if (response.data.resultCode == 0) {
+               dispatch(unFollowSuccess(userId));
+            }
+            dispatch(toggleFollowingProcess(false, userId));
+         });
+   }
+}
 export default usersReducer;

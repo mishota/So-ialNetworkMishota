@@ -2,7 +2,7 @@ import React from "react";
 // import * as axios from 'axios';
 import Profile from "./Profile";
 import { connect } from 'react-redux';
-import { getUserProfile } from '../../redux/profileReducer'
+import { getUserProfile, getStatus, updateStatus } from '../../redux/profileReducer'
 import Preloader from '../../components/common/Preloader/Preloader.js';
 import { Redirect, withRouter } from "react-router";
 // import { UserApi } from "../../api/api";
@@ -19,7 +19,7 @@ class ProfileContainer extends React.Component {
       let userId = this.props.match.params.userId;
       debugger;
       if (!userId) {
-         userId = 2;
+         userId = 20000 ;
       }
       // // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
       // UserApi.getProfile(userId)
@@ -28,6 +28,7 @@ class ProfileContainer extends React.Component {
       //    });
       // // this.getProfile();
       this.props.getUserProfile(userId);
+      this.props.getStatus(userId);
    }
 
    // getProfile = () => {
@@ -44,7 +45,8 @@ class ProfileContainer extends React.Component {
       // if (!this.props.isAuth) return <Redirect to={"/Login"} />;
       return (
          // this.props.Profile ? <Preloader /> :
-         <Profile {...this.props} profile={this.props.profile} />
+         <Profile {...this.props} profile={this.props.profile} status={this.props.status}
+            updateStatus={this.props.updateStatus} />
       )
    }
 }
@@ -67,6 +69,7 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
    return {
       profile: state.profilePage.profile,
+      status: state.profilePage.status,
       // isAuth: state.auth.isAuth,
    }
 }
@@ -76,7 +79,7 @@ let mapStateToProps = (state) => {
 // export default connect(mapStateToProps, { getUserProfile })(WithUrlDataContainerComponent);
 
 export default compose(
-   connect(mapStateToProps, { getUserProfile }),
+   connect(mapStateToProps, { getUserProfile, getStatus, updateStatus }),
    withAuthRedirectComponent,
    withRouter
 )(ProfileContainer);

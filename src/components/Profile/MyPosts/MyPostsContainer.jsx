@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 // import state from "../../../redax/reduxStore";
 // import Post from "../Post/Post";
 // import c from './MyPosts.module.css';
-import { addPostActionCreator, updateNewPostActionCreator } from "../../../redux/profileReducer.js";
+// import { addPostActionCreator, updateNewPostActionCreator } from "../../../redux/profileReducer.js";
+import { addPostActionCreator } from "../../../redux/profileReducer.js";
 import MyPosts from "./MyPosts";
 
 
@@ -32,16 +33,17 @@ import MyPosts from "./MyPosts";
 const mapStateToProps = (state) => {
    return {
       posts: state.profilePage.posts,
-      newPostText: state.profilePage.newPostText,
+      // newPostText: state.profilePage.newPostText,
    }
 }
 const mapDispatchToProps = (dispatch) => {
    return {
-      addPost: () => { dispatch(addPostActionCreator()) },
-      updateNewPostText: (text) => {
-         let action = updateNewPostActionCreator(text);
-         dispatch(action);
-      },
+      // addPost: () => { dispatch(addPostActionCreator()) },
+      // updateNewPostText: (text) => {
+      //    let action = updateNewPostActionCreator(text);
+      //    dispatch(action);
+      // },
+      addPost: (newPostText) => { dispatch(addPostActionCreator(newPostText)) },
 
    }
 }

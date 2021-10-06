@@ -3,7 +3,7 @@ import React from "react";
 import Post from "../Post/Post";
 import c from './MyPosts.module.css';
 // import { addPostActionCreator, updateNewPostActionCreator } from "../../../redax/profileReducer.js";
-
+import { Form, Field } from 'react-final-form'
 
 
 
@@ -24,6 +24,10 @@ const MyPosts = (props) => {
       // let action = updateNewPostActionCreator(text);
       // props.dispatch(action);
    }
+   const addNewPost = (values) => {
+      props.addPost(values.newPostText);
+   };
+
    return (
       <div className={c.postsBlock}>
          <h3>MyPosts</h3>
@@ -31,12 +35,13 @@ const MyPosts = (props) => {
             NewPosts
          </div>
          <div>
-            <div>
+            {/* <div>
                <textarea onChange={postOnChange} ref={newPostElement} value={props.newPostText} />
             </div>
             <div>
                <button onClick={onAddPost}>Add post</button>
-            </div>
+            </div> */}
+            <AddPostForm addNewPost={addNewPost} onSubmit={addNewPost} />
          </div>
          <div className={c.posts}>
             {postsElement}
@@ -46,5 +51,23 @@ const MyPosts = (props) => {
 
    )
 }
+
+const AddPostForm = (props) => (
+   <Form
+      onSubmit={props.addNewPost}>
+      {({ handleSubmit }) => (
+         <form onSubmit={handleSubmit}>
+            <div>
+               {/* <textarea onChange={postOnChange} ref={newPostElement} value={props.newPostText} /> */}
+               <Field name="newPostText" component="textarea" placeholder={'Enter your post text'} />
+            </div>
+            <div>
+               {/* <button onClick={onAddPost}>Add post</button> */}
+               <button type="submit">Add post</button>
+            </div>
+         </form>
+      )}
+   </Form>
+)
 
 export default MyPosts;

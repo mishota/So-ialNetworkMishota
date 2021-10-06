@@ -22,10 +22,9 @@ const authReducer = (state = initialState, action) => {
 }
 export const setAuthUserData = (userId, email, login) => ({ type: SET_USER_DATA, data: { userId, email, login } })
 export const getAuthUserData = () => (dispatch) => { //thunk container
-   debugger;
+
    AuthAPI.me() // вернет промис
       .then(response => {
-         debugger;
          if (response.data.resultCode === 0) {
             dispatch(setAuthUserData(response.data.data.id, response.data.data.email, response.data.data.login))
          }

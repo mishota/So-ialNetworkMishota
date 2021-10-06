@@ -3,10 +3,10 @@ import React from 'react'
 // import { NavLink } from 'react-router-dom';
 // import DialogItem from './DialogItem/DialogItem'
 // import Message from './Message/Message';
-import { updateNewMessageBodyCreator, sendMessageCreator } from '../../redux/dialogReducer';
+import { sendMessageCreator } from '../../redux/dialogReducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
-import { Redirect } from "react-router";
+// import { Redirect } from "react-router";
 import { withAuthRedirectComponent } from '../../HOC/withAuthRedirectComponent';
 import { compose } from 'redux';
 
@@ -51,15 +51,18 @@ let mapStateToProps = (state) => {
 }
 let mapDispatchToProps = (dispatch) => {
    return {
-      sendMessage: () => {
-         dispatch(sendMessageCreator());
+      // sendMessage: () => {
+      //    dispatch(sendMessageCreator());
+      // },
+      sendMessage: (newMessageBody) => {
+         dispatch(sendMessageCreator(newMessageBody));
       },
-      updateNewMessageBody: (body) => {
-         dispatch(updateNewMessageBodyCreator(body));
-      },
+
+      // updateNewMessageBody: (body) => {
+      //    dispatch(updateNewMessageBodyCreator(body));
+      // },
    }
 }
-
 // let AuthRedirectComponent = (props) => { //обертка над ProfileContainer для редиректа
 //    if (!this.props.isAuth) return <Redirect to={"/Login"} />;
 //    return <Dialogs {...props} /> //пропсы прокинем дальше

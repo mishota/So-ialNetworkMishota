@@ -4,6 +4,8 @@ import Post from "../Post/Post";
 import c from './MyPosts.module.css';
 // import { addPostActionCreator, updateNewPostActionCreator } from "../../../redax/profileReducer.js";
 import { Form, Field } from 'react-final-form'
+import { maxValue, required, composeValidators } from "../../../utils/validators";
+import { TextArea } from "../../common/formControls";
 
 
 
@@ -52,6 +54,7 @@ const MyPosts = (props) => {
    )
 }
 
+const maxValue10 = maxValue(10);
 const AddPostForm = (props) => (
    <Form
       onSubmit={props.addNewPost}>
@@ -59,7 +62,12 @@ const AddPostForm = (props) => (
          <form onSubmit={handleSubmit}>
             <div>
                {/* <textarea onChange={postOnChange} ref={newPostElement} value={props.newPostText} /> */}
-               <Field name="newPostText" component="textarea" placeholder={'Enter your post text'} />
+               {/* <Field name="newPostText" component="textarea" placeholder={'Enter your post text'} */}
+               <Field name="newPostText" component={TextArea} placeholder={'Enter your post text'}
+                  // validate={composeValidators(required, maxValue(10))}>
+                  validate={required}>
+
+               </Field>
             </div>
             <div>
                {/* <button onClick={onAddPost}>Add post</button> */}

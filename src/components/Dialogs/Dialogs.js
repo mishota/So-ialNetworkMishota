@@ -6,6 +6,8 @@ import Message from './Message/Message';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 // import { updateNewMessageBodyCreator, sendMessageCreator } from '../../redax/dialogReducer';
 import { Form, Field } from 'react-final-form'
+import { TextArea } from '../common/formControls';
+import { required } from '../../utils/validators';
 
 const Dialogs = (props) => {
 
@@ -58,7 +60,9 @@ const AddMessageForm = (props) => (
          <form onSubmit={handleSubmit}>
             <div>
                {/* <textarea value={newMessageBody} onChange={onNewMessageChange} placeholder="Enter your message"/> */}
-               <Field name="newMessageBody" component="textarea" placeholder={'Enter your message babe'} />
+               {/* <Field name="newMessageBody" component="textarea" placeholder={'Enter your message babe'} /> */}
+               <Field name="newMessageBody" component={TextArea} placeholder={'Enter your message babe'}
+                  validate={required} />
             </div>
             <div>
                {/* <button onClick={onSendMessageClick}>Send</button> */}

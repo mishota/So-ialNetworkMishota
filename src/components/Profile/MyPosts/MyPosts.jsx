@@ -10,48 +10,53 @@ import { TextArea } from "../../common/formControls";
 
 
 
-const MyPosts = (props) => {
+class MyPosts extends React.PureComponent {
 
-   let postsElement = props.posts.map(p => <Post message={p.message} LikeCount={p.LikeCount} />)
-   let newPostElement = React.createRef();
-   let onAddPost = () => {
+   // shouldComponentUpdate(nextProps, nextState) { //для оптимизации перерисовки
+   //    return nextProps !== this.props || nextState !== this.state;
+   // }
+   render() {
+      let postsElement = this.props.posts.map(p => <Post message={p.message} LikeCount={p.LikeCount} />)
+      let newPostElement = React.createRef();
+      let onAddPost = () => {
 
-      // let text = newPostElement.current.value;
-      props.addPost();
-      // props.dispatch(addPostActionCreator());
-   }
-   let postOnChange = () => {
-      let text = newPostElement.current.value;
-      props.updateNewPostText(text);
-      // let action = updateNewPostActionCreator(text);
-      // props.dispatch(action);
-   }
-   const addNewPost = (values) => {
-      props.addPost(values.newPostText);
-   };
+         // let text = newPostElement.current.value;
+         this.props.addPost();
+         // props.dispatch(addPostActionCreator());
+      }
+      let postOnChange = () => {
+         let text = newPostElement.current.value;
+         this.props.updateNewPostText(text);
+         // let action = updateNewPostActionCreator(text);
+         // props.dispatch(action);
+      }
+      const addNewPost = (values) => {
+         this.props.addPost(values.newPostText);
+      };
 
-   return (
-      <div className={c.postsBlock}>
-         <h3>MyPosts</h3>
-         <div>
-            NewPosts
-         </div>
-         <div>
-            {/* <div>
+      return (
+         <div className={c.postsBlock}>
+            <h3>MyPosts</h3>
+            <div>
+               NewPosts
+            </div>
+            <div>
+               {/* <div>
                <textarea onChange={postOnChange} ref={newPostElement} value={props.newPostText} />
             </div>
             <div>
                <button onClick={onAddPost}>Add post</button>
             </div> */}
-            <AddPostForm addNewPost={addNewPost} onSubmit={addNewPost} />
-         </div>
-         <div className={c.posts}>
-            {postsElement}
+               <AddPostForm addNewPost={addNewPost} onSubmit={addNewPost} />
+            </div>
+            <div className={c.posts}>
+               {postsElement}
+            </div>
+
          </div>
 
-      </div>
-
-   )
+      )
+   }
 }
 
 const maxValue10 = maxValue(10);

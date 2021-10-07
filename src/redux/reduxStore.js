@@ -5,6 +5,7 @@ import sideBarReducer from './sideBarReducer'
 import usersReducer from "./usersReducer";
 import authReducer from "./AuthReducer";
 import thunkMiddleWare from "redux-thunk"
+import appReducer from "./AppReducer";
 // import { reducer as formReducer } from 'react-final-form'
 
 
@@ -14,6 +15,7 @@ let reducers = combineReducers({
    userPage: usersReducer,
    sideBar: sideBarReducer,
    auth: authReducer,
+   app: appReducer
    // form: formReducer,
 });
 let store = createStore(

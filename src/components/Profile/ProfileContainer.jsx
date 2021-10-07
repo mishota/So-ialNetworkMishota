@@ -17,9 +17,10 @@ class ProfileContainer extends React.Component {
    // }
    componentDidMount() {
       let userId = this.props.match.params.userId;
-      debugger;
       if (!userId) {
-         userId = 20000 ;
+         userId = 20000;
+         // userId = this.props.autorizedUserId;
+         if (!userId) { this.props.history.push("/login") }
       }
       // // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
       // UserApi.getProfile(userId)

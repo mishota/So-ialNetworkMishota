@@ -13,6 +13,7 @@ import Preloader from '../components/common/Preloader/Preloader';
 import { UserApi } from '../api/api';
 import { compose } from 'redux';
 import { withAuthRedirectComponent } from '../HOC/withAuthRedirectComponent';
+import { getCurrentPage, getFollowingInProcess, getIsFetching, getPageSize, getTotalUsersCount, getUsersFromState } from '../redux/usersSelectors';
 
 
 class UsersContainer extends React.Component {
@@ -73,16 +74,28 @@ class UsersContainer extends React.Component {
    }
 }
 
+// let mapStateToProps = (state) => {
+//    return {
+//       users: state.userPage.users,
+//       pageSize: state.userPage.pageSize,
+//       totalUsersCount: state.userPage.totalUsersCount,
+//       currentPage: state.userPage.currentPage,
+//       isFetching: state.userPage.isFetching,
+//       followingInProcess: state.userPage.followingInProcess,
+//    }
+// }
+
 let mapStateToProps = (state) => {
    return {
-      users: state.userPage.users,
-      pageSize: state.userPage.pageSize,
-      totalUsersCount: state.userPage.totalUsersCount,
-      currentPage: state.userPage.currentPage,
-      isFetching: state.userPage.isFetching,
-      followingInProcess: state.userPage.followingInProcess,
+      users: getUsersFromState(state),
+      pageSize: getPageSize(state),
+      totalUsersCount: getTotalUsersCount(state),
+      currentPage: getCurrentPage(state),
+      isFetching: getIsFetching(state),
+      followingInProcess: getFollowingInProcess(state),
    }
 }
+
 // let mapDispatchToProps = (dispatch) => {
 //    return {
 //       follow: (userId) => {

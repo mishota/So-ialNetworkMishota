@@ -2,7 +2,7 @@ import React from "react";
 // import * as axios from 'axios';
 import Profile from "./Profile";
 import { connect } from 'react-redux';
-import { getUserProfile, getStatus, updateStatus } from '../../redux/profileReducer'
+import { getUserProfile, getStatus, updateStatus, savePhoto } from '../../redux/profileReducer'
 import Preloader from '../../components/common/Preloader/Preloader.js';
 import { Redirect, withRouter } from "react-router";
 // import { UserApi } from "../../api/api";
@@ -15,7 +15,8 @@ class ProfileContainer extends React.Component {
    // super(props);
    // this.getProfile();
    // }
-   componentDidMount() {
+
+   getProfile = () => {
       let userId = this.props.match.params.userId;
       if (!userId) {
          userId = 20000;
@@ -32,12 +33,14 @@ class ProfileContainer extends React.Component {
       this.props.getStatus(userId);
    }
 
-   // getProfile = () => {
-   //    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
-   //       .then(response => {
-   //          this.props.SetUserProfile(response.data);
-   //       });
-   // }
+   componentDidMount() {
+      this.getProfile();
+   }
+   componentDidUpdate(prevProps, prevState) {
+      if (this.props.match.params.userId === prevProps.match.params.userId)
+         this.getProfile();
+   }
+
 
 
 
@@ -46,8 +49,12 @@ class ProfileContainer extends React.Component {
       // if (!this.props.isAuth) return <Redirect to={"/Login"} />;
       return (
          // this.props.Profile ? <Preloader /> :
-         <Profile {...this.props} profile={this.props.profile} status={this.props.status}
-            updateStatus={this.props.updateStatus} />
+         <Profile {...this.props}
+            profile={this.props.profile}
+            status={this.props.status}
+            isOwner={!this.props.match.params.userId}
+            updateStatus={this.props.updateStatus}
+            savePhoto={this.props.savePhoto} />
       )
    }
 }
@@ -80,7 +87,7 @@ let mapStateToProps = (state) => {
 // export default connect(mapStateToProps, { getUserProfile })(WithUrlDataContainerComponent);
 
 export default compose(
-   connect(mapStateToProps, { getUserProfile, getStatus, updateStatus }),
+   connect(mapStateToProps, { getUserProfile, getStatus, updateStatus, savePhoto }),
    withAuthRedirectComponent,
    withRouter
 )(ProfileContainer);

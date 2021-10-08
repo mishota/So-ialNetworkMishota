@@ -19,7 +19,7 @@ let reducers = combineReducers({
    // form: formReducer,
 });
 let store = createStore(
-   reducers, applyMiddleware(thunkMiddleWare)
+   reducers, applyMiddleware(thunkMiddleWare),
    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

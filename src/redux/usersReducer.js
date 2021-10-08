@@ -101,29 +101,52 @@ export const toggleFollowingProcess = (isFetching, userId) => ({ type: TOGGLE_IS
 
 
 export const getUsers = (page, pageSize) => {   //thunk creator requestUsers
-   return (dispatch) => {   //thunk
+   // return (dispatch) => {   //thunk
+   //    dispatch(toggleIsFetching(true));
+   //    dispatch(setCurrentPage(page));
+   //    UserApi.getUsers(page, pageSize).then(data => {
+   //       dispatch(toggleIsFetching(false));
+   //       dispatch(setUsers(data.items));
+   //       dispatch(setTotalUsersCount(data.totalCount));
+   //    });
+   // }
+   return async (dispatch) => {   //thunk
       dispatch(toggleIsFetching(true));
       dispatch(setCurrentPage(page));
-      UserApi.getUsers(page, pageSize).then(data => {
-         dispatch(toggleIsFetching(false));
-         dispatch(setUsers(data.items));
-         dispatch(setTotalUsersCount(data.totalCount));
-      });
+      let data = await UserApi.getUsers(page, pageSize);
+      dispatch(toggleIsFetching(false));
+      dispatch(setUsers(data.items));
+      dispatch(setTotalUsersCount(data.totalCount));
    }
 }
 
+const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
+   dispatch(toggleFollowingProcess(true, userId));
+   let response = await apiMethod(userId);
+   if (response.data.resultCode === 0) {
+      dispatch(actionCreator(userId));
+   }
+   dispatch(toggleFollowingProcess(false, userId));
+}
+
+// export const follow = (userId) => {   //thunk creator
+//    return async (dispatch) => {   //thunk
+//       dispatch(toggleFollowingProcess(true, userId));
+//       let response = await UserApi.follow(userId)
+//       if (response.data.resultCode === 0) {
+//          dispatch(followSuccess(userId));
+//       }
+//       dispatch(toggleFollowingProcess(false, userId));
+//    }
+// }
 export const follow = (userId) => {   //thunk creator
-   return (dispatch) => {   //thunk
-      dispatch(toggleFollowingProcess(true, userId));
-      UserApi.follow(userId)
-         .then(response => {
-            if (response.data.resultCode == 0) {
-               dispatch(followSuccess(userId));
-            }
-            dispatch(toggleFollowingProcess(false, userId));
-         });
+   return async (dispatch) => {   //thunk
+      let apiMethod = UserApi.follow.bind(this);
+      let actionCreator = followSuccess;
+      followUnfollowFlow(dispatch, userId, apiMethod, actionCreator);
    }
 }
+
 
 export const unFollow = (userId) => {   //thunk creator
    return (dispatch) => {   //thunk

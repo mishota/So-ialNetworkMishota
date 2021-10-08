@@ -7,7 +7,7 @@ import { loginMe, logout } from "../../redux/AuthReducer.js"
 import { Redirect } from "react-router";
 
 
-
+// const LoginForm = ({onSubmit, handleSubmit, error(); }) => (
 const LoginForm = (props) => (
    <Form
       // onSubmit={props.onSubmit}

@@ -13,6 +13,8 @@ import { getAuthUserData } from "./redux/AuthReducer"
 import { compose } from 'redux';
 import { initializeApp } from "./redux/AppReducer"
 import Preloader from './components/common/Preloader/Preloader';
+import store from './redux/reduxStore'
+import { Provider } from 'react-redux';
 
 
 
@@ -56,7 +58,28 @@ const mapStateToProps = (state) => ({
   initialized: state.app.initialized,
 })
 // export default App;
-export default compose(
+// export default compose(
+//   withRouter,
+//   connect(mapStateToProps, { initializeApp })
+// )(App);
+
+let AppContainer = compose(
   withRouter,
   connect(mapStateToProps, { initializeApp })
 )(App);
+
+let MishotaSocialApp = (props) => {
+  return <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppContainer
+        // state={state}
+        // dispatch={store.dispatch.bind(store)}
+        // store={store}
+        />
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>
+}
+
+export default MishotaSocialApp;

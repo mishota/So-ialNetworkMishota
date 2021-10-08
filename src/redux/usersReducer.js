@@ -1,6 +1,7 @@
 import { act } from "react-dom/test-utils";
 import { UserApi } from "../api/api"
 
+
 const FOLLOW = 'FOLLOW';
 const UN_FOLLOW = 'UN_FOLLOW';
 const SET_USERS = "SET_USERS";
@@ -24,7 +25,7 @@ let initialState = {
       //       followed: true, fullName: "Uliana", status: "I'm a queen", location: { city: "Minsk", country: "Belarus" }
       //    },
    ],
-   pageSize: 5,
+   pageSize: 10,
    totalUsersCount: 0,
    currentPage: 1,
    isFetching: false,

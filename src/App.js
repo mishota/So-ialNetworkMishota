@@ -19,8 +19,16 @@ import { Provider } from 'react-redux';
 
 
 class App extends React.Component {
+  catchAllUnhandledErrors = (PromiseRejectionEvent) => {
+    alert('Some error occured')
+  }
+
   componentDidMount() {
     this.props.initializeApp();
+    window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+  }
+  componentWillUnmount() {
+    window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
   }
   render() {
     if (!this.props.initialized)

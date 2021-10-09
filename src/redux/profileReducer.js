@@ -115,12 +115,18 @@ export const getStatus = (userId) => (dispatch) => { //thunk container
 }
 
 export const updateStatus = (status) => (dispatch) => { //thunk container
-   profileAPI.updateStatus(status)
-      .then(response => {
-         if (response.data.resultCode === 0) {
-            dispatch(setStatus(status))
-         }
-      });
+   try {
+      profileAPI.updateStatus(status)
+         .then(response => {
+            if (response.data.resultCode === 0) {
+               dispatch(setStatus(status))
+            }
+         });
+   }
+   catch (error) {
+      window.alert(error.message);
+   }
+
 }
 export const savePhoto = (file) => async (dispatch) => { //thunk container
    const response = await profileAPI.savePhoto(file)

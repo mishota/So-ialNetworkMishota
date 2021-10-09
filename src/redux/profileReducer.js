@@ -1,11 +1,13 @@
 import { profileAPI, UserApi } from "../api/api"
 
-const ADD_POST = 'ADD-POST';
-const DELETE_POST = 'DELETE_POST';
+const ADD_POST = 'profile-ADD-POST';
+const DELETE_POST = 'profile-DELETE_POST';
 // const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_STATUS = 'SET_STATUS';
-const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
+const SET_USER_PROFILE = 'profile-SET_USER_PROFILE';
+const SET_STATUS = 'profile-SET_STATUS';
+const SAVE_PHOTO_SUCCESS = "profile-SAVE_PHOTO_SUCCESS";
+// const SAVE_PROFILE_SUCCESS = "profile-SAVE_PROFILE_SUCCESS";
+
 
 let initialState = {
    posts: [
@@ -67,6 +69,17 @@ const profileReducer = (state = initialState, action) => {
             ...state, profile: { ...state.profile, photos: action.photos }
          }
 
+      // case SAVE_PROFILE_SUCCESS:
+      //    return {
+      //       ...state, profile: {
+      //          ...state.profile,
+      //          fullName: action.fullName,
+      //          lookingForAJob: action.lookingForAJob,
+      //          lookingForAJobDescription: action.lookingForAJobDescription,
+      //          aboutMe: action.aboutMe,
+      //       }
+      //    }
+
       default:
          return state;
    }
@@ -83,6 +96,8 @@ export const deletePost = (postId) => ({ type: SET_STATUS, postId })
 export const SetUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status) => ({ type: SET_STATUS, status: status, })
 export const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO_SUCCESS, photos, })
+// export const saveProfileSuccess = (fullName, lookingForAJob, lookingForAJobDescription, aboutMe) =>
+//    ({ type: SAVE_PROFILE_SUCCESS, fullName, lookingForAJob, lookingForAJobDescription, aboutMe })
 
 
 export const getUserProfile = (userId) => (dispatch) => { //thunk container
@@ -112,6 +127,29 @@ export const savePhoto = (file) => async (dispatch) => { //thunk container
 
    if (response.data.resultCode === 0) {
       dispatch(savePhotoSuccess(response.data.data.photos))
+   }
+
+}
+
+// export const saveProfile = (fullName, lookingForAJob, lookingForAJobDescription, aboutMe) => async (dispatch) => { //thunk container
+//    const response = await profileAPI.saveProfile(fullName, lookingForAJob, lookingForAJobDescription, aboutMe)
+
+//    if (response.data.resultCode === 0) {
+//       dispatch(saveProfileSuccess(response.data.data.fullName, response.data.data.lookingForAJob,
+//          response.data.data.lookingForAJobDescription, response.data.data.aboutMe))
+//    }
+
+// }
+export const saveProfile = (profile) => async (dispatch) => { //thunk container
+   const response = await profileAPI.saveProfile(profile)
+   debugger;
+   if (response.data.resultCode === 0) {
+      //    dispatch(saveProfileSuccess(response.data.data.fullName, response.data.data.lookingForAJob,
+      //       response.data.data.lookingForAJobDescription, response.data.data.aboutMe))
+   }
+   else {
+      // dispatch(stopSubmit("edit-profile", { _error: data.messages[0] }))
+      // return Promise.reject(data.messages[0])
    }
 
 }

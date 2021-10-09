@@ -32,6 +32,9 @@ const LoginForm = (props) => (
                {/* <input type={"checkbox"}></input> remember me */}
                <Field component={Input} type="checkbox" name="rememberMe" validate={required} />
             </div>
+
+            {props.captchaUrl && <img src={props.captchaUrl} />}
+            {props.captchaUrl && <Field name="captcha" component={Input} />}
             <div>
                <button type="submit">Submit</button>
             </div>
@@ -44,7 +47,7 @@ const LoginForm = (props) => (
 const Login = (props) => {
    const onSubmit = (formData) => {
       // window.alert(formData.login);
-      props.loginMe(formData.email, formData.password, formData.rememberMe)
+      props.loginMe(formData.email, formData.password, formData.rememberMe, formData.captcha)
    };
 
    if (props.isAuth) {
@@ -53,7 +56,7 @@ const Login = (props) => {
    return <div>
       <h1>LOGIN</h1>
 
-      <LoginForm onSubmit={onSubmit} />
+      <LoginForm onSubmit={onSubmit} captchaUrl={props.captchaUrl} />
       {/* <LoginForm /> */}
 
 
@@ -61,5 +64,6 @@ const Login = (props) => {
 }
 const mapStateToProps = (state) => ({
    isAuth: state.auth.isAuth,
+   captchaUrl: state.auth.captchaUrl,
 })
 export default connect(mapStateToProps, { loginMe })(Login);

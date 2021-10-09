@@ -2,7 +2,7 @@ import React from "react";
 // import * as axios from 'axios';
 import Profile from "./Profile";
 import { connect } from 'react-redux';
-import { getUserProfile, getStatus, updateStatus, savePhoto } from '../../redux/profileReducer'
+import { getUserProfile, getStatus, updateStatus, savePhoto, saveProfile } from '../../redux/profileReducer'
 import Preloader from '../../components/common/Preloader/Preloader.js';
 import { Redirect, withRouter } from "react-router";
 // import { UserApi } from "../../api/api";
@@ -54,7 +54,9 @@ class ProfileContainer extends React.Component {
             status={this.props.status}
             isOwner={!this.props.match.params.userId}
             updateStatus={this.props.updateStatus}
-            savePhoto={this.props.savePhoto} />
+            savePhoto={this.props.savePhoto}
+         // saveProfile={this.props.saveProfile}
+         />
       )
    }
 }
@@ -87,7 +89,7 @@ let mapStateToProps = (state) => {
 // export default connect(mapStateToProps, { getUserProfile })(WithUrlDataContainerComponent);
 
 export default compose(
-   connect(mapStateToProps, { getUserProfile, getStatus, updateStatus, savePhoto }),
+   connect(mapStateToProps, { getUserProfile, getStatus, updateStatus, savePhoto, saveProfile }),
    withAuthRedirectComponent,
    withRouter
 )(ProfileContainer);

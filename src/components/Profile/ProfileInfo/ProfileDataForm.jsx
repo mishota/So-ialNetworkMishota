@@ -1,48 +1,56 @@
 import React from "react";
 import s from './ProfileInfo.module.css';
+import { Form, Field } from 'react-final-form';
+import { required } from "../../../utils/validators";
+import { Input } from "../../common/formControls";
 
+const ProfileDataForm = (props) => (
+   <Form
+      // onSubmit={props.onSubmit}
+      // onSubmit={onSubmit}
+      // validate={validate}
+      // onSubmit={(formData) => { window.alert(formData.login) }}>
+      // initialValues={props.profile}
+      onSubmit={props.onSubmit}>
 
+      {({ handleSubmit }) => (
+         <form onSubmit={handleSubmit}>
 
-const ProfileData = ({ profile, isOwner, goToEditMode }) => {
-   return (
-      <div>
-         <div>
-            {isOwner && <button onClick={goToEditMode}>Edit</button>}
-         </div>
-         <div>
-            <b>Full name:</b> {profile.fullName}
-         </div>
-         <div>
-            <b>Looking for a job:</b> {profile.lookingForAJob ? "yes" : "no"}
-         </div>
-         {profile.lookingForAJob &&
             <div>
-               <b>My skills:</b> {profile.lookingForAJobDescription}
+               <b>Full name:</b>
+               <Field name="fullName" component={Input} placeholder={'Full name:'} validate={required} />
             </div>
-         }
-         <div>
-            <b>About me:</b> {profile.aboutMe}
-         </div>
-         <div>
-            <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
-               return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]} />
-            })}
-         </div>
-      </div>
-   )
-}
-const Contact = ({ contactTitle, contactValue }) => {
-   return (
-      <div className={s.contact}><b>{contactTitle}:</b> {contactValue} </div>
-   )
-}
+            <div>
+               <b>Looking for a job:</b><
+                  Field name="lookingForAJob" component={Input} type="checkbox" placeholder={'Looking for a job:'} />
+            </div>
+            <div>
+               <b>My skills:</b>
+               <Field name="lookingForAJobDescription" component={Input} placeholder={'My skills:'} validate={required} />
+            </div>
+            <div>
+               <b>About me:</b>
+               <Field name="aboutMe" component={Input} placeholder={'About me:'} validate={required} />
+            </div>
+            <div>
+               <button type="submit">Submit</button>
+            </div>
 
-const ProfileDataForm = ({ profile }) => {
-   return (
-      <div>
-         Form
-      </div>
-   )
-}
+            <div>
+               <b>Contacts:</b> {Object.keys(props.profile.contacts).map(key => {
+                  return <div key={key} className={s.contact}>
+                     <b>{key}:</b>
+                     <Field name={"contacts." + key} component={Input} placeholder={key} />
+                  </div>
+               })}
+            </div>
+
+
+         </form>
+      )}
+   </Form>
+)
+
+
 
 export default ProfileDataForm;

@@ -6,7 +6,7 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from "../../../Assets/Images/user.png";
 import ProfileDataForm from "./ProfileDataForm";
 
-const ProfileInfo = ({ profile, isOwner, status, updateStatus, savePhoto }) => {
+const ProfileInfo = ({ profile, isOwner, status, updateStatus, savePhoto, saveProfile }) => {
    let [editMode, setEditMode] = useState(false);
 
 
@@ -30,6 +30,12 @@ const ProfileInfo = ({ profile, isOwner, status, updateStatus, savePhoto }) => {
       }
    }
 
+   const onSubmit = (formData) => {
+      // window.alert(formData.fullName + formData.lookingForAJob + formData.lookingForAJobDescription + formData.aboutMe);
+      debugger;
+      saveProfile(formData);
+   };
+
    return (
       <div>
          {/* <div>
@@ -40,7 +46,7 @@ const ProfileInfo = ({ profile, isOwner, status, updateStatus, savePhoto }) => {
             <div>{profile.fullName}</div>
             {isOwner && <input type={"file"} onChange={onMainPhotoSeleted} />}
             {editMode
-               ? <ProfileDataForm profile={profile} />
+               ? <ProfileDataForm profile={profile} onSubmit={onSubmit} />
                : <ProfileData
                   profile={profile}
                   isOwner={isOwner}

@@ -3,7 +3,7 @@ import { Form, Field } from 'react-final-form'
 import { connect } from "react-redux";
 import { required } from "../../utils/validators";
 import { Input } from "../common/formControls";
-import { loginMe, logout } from "../../redux/AuthReducer.js"
+import { loginMe, logout } from "../../redux/AuthReducer"
 import { Redirect } from "react-router";
 
 

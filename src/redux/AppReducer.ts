@@ -4,10 +4,13 @@ import { getAuthUserData } from "./AuthReducer";
 
 const INITIALIZED_SUCCESS = "INITIALIZED_SUCCESS";
 
-let initialState = {
+export type InitialStateType = {
+   initialized: boolean,
+};
+let initialState: InitialStateType = {
    initialized: false,
 };
-const appReducer = (state = initialState, action) => {
+const appReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
    switch (action.type) {
       case INITIALIZED_SUCCESS:
          return {
@@ -17,10 +20,14 @@ const appReducer = (state = initialState, action) => {
       default:
          return state;
    }
-}
-export const initializedSuccess = () => ({ type: INITIALIZED_SUCCESS }) //action creator
+};
 
-export const initializeApp = () => (dispatch) => { //thunk container
+type InitializedSuccessActionType = {
+   type: typeof INITIALIZED_SUCCESS,
+}
+export const initializedSuccess = (): InitializedSuccessActionType => ({ type: INITIALIZED_SUCCESS }) //action creator
+
+export const initializeApp = () => (dispatch: any) => { //thunk container
    let promise = dispatch(getAuthUserData());
    // promise.then(() => {
    //    dispatch(initializedSuccess()); // если много, то все промисы в массив и Promis.all([])

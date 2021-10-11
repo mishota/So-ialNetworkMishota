@@ -9,7 +9,7 @@ import appReducer from "./AppReducer";
 // import { reducer as formReducer } from 'react-final-form'
 
 
-let reducers = combineReducers({
+let rootReducer = combineReducers({
    profilePage: profileReducer,
    dialogsPage: dialogReducer,
    userPage: usersReducer,
@@ -18,11 +18,15 @@ let reducers = combineReducers({
    app: appReducer
    // form: formReducer,
 });
+type RootReducerType = typeof rootReducer;
+export type AppStateType = ReturnType<RootReducerType>
 let store = createStore(
-   reducers, applyMiddleware(thunkMiddleWare),
+   rootReducer, applyMiddleware(thunkMiddleWare),
    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
-
+//@ts-ignore
 window.store = store;
+//@ts-ignore
+window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
 export default store;

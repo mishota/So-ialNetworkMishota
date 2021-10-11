@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 // import Post from "../Post/Post";
 // import c from './MyPosts.module.css';
 // import { addPostActionCreator, updateNewPostActionCreator } from "../../../redux/profileReducer.js";
-import { addPostActionCreator } from "../../../redux/profileReducer.js";
+import { addPostActionCreator } from "../../../redux/profileReducer";
 import MyPosts from "./MyPosts";
 
 

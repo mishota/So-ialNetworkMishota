@@ -95,7 +95,7 @@ export const getAuthUserData = () => async (dispatch: any) => { //thunk containe
 //       });
 // }
 
-export const loginMe = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => { //thunk container
+export const loginMe = (email: string, password: string, rememberMe: boolean, captcha: string | null) => async (dispatch: any) => { //thunk container
    let response = await AuthAPI.loginMe(email, password, rememberMe, captcha) // вернет промис
    if (response.data.resultCode === 0) {
       dispatch(getAuthUserData())

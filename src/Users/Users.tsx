@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from "./Users.module.css";
 import userPhoto from "../Assets/Images/user.png";
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import Paginator from '../components/common/Paginator/Paginator';
 import User from "./User"
 import { UsersType } from '../types/types';
@@ -17,7 +17,7 @@ type PropsType = {
    portionSize?: number
    users: Array<UsersType>
    followingInProcess: Array<number>
-   toggleFollowingProcess: boolean
+   toggleFollowingProcess: (isFetching: boolean, userId: number) => void
    getUsers: (page: number, pageSize: number) => void
    follow: (userId: number) => void
    unFollow: (userId: number) => void

@@ -4,33 +4,30 @@ import {
    follow, unFollow,
    setCurrentPage, toggleFollowingProcess, getUsers
 } from '../redux/usersReducer';
-import * as axios from 'axios';
-
-// import styles from "./Users.module.css";
-// import userPhoto from "../Assets/Images/user.png";
 import Users from './Users';
 import Preloader from '../components/common/Preloader/Preloader';
-import { UserApi } from '../api/api';
+// import { UserApi } from '../api/api';
 import { compose } from 'redux';
 import { withAuthRedirectComponent } from '../HOC/withAuthRedirectComponent';
 import { getCurrentPage, getFollowingInProcess, getIsFetching, getPageSize, getTotalUsersCount, getUsersFromState } from '../redux/usersSelectors';
 import { UsersType } from '../types/types';
 import { AppStateType } from '../redux/reduxStore';
 type MapStatePropsType = {
-   currentPage: number
-   pageSize: number
-   isFetching: boolean
    users: Array<UsersType>
+   pageSize: number
+   currentPage: number
    totalUsersCount: number
+   isFetching: boolean
    followingInProcess: Array<number>
 }
+
 type MapDispatchPropsType = {
    getUsers: (page: number, pageSize: number) => void
    follow: (userId: number) => void
    unFollow: (userId: number) => void
-
-   toggleFollowingProcess: boolean
+   toggleFollowingProcess: (isFetching: boolean, userId: number) => void
 }
+
 type OwnPropsType = {
    pageTitle: string
 }
@@ -161,10 +158,12 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 export default compose(
 
    //TStateProps={}, TDispatchProps={}, TOwnProps={}, State = DefaultRootState
-   connect <MapDispatchPropsType, MapDispatchPropsType, OwnPropsType,AppStateType>(mapStateToProps, {
-      follow, unFollow, setCurrentPage,
-      toggleFollowingProcess,
+   connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType> (mapStateToProps, {
       getUsers,
+      follow, 
+      unFollow, 
+      // setCurrentPage,
+      toggleFollowingProcess,
    }))(UsersContainer);
    // withAuthRedirectComponent, 
    // connect(mapStateToProps, {

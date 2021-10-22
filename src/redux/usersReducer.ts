@@ -1,6 +1,10 @@
-import { act } from "react-dom/test-utils";
+import { AppStateType } from './reduxStore';
+// import { type } from 'os';
+// import { Dispatch } from 'react';
+// import { act } from "react-dom/test-utils";
 import { UserApi } from "../api/api"
 import { PhotosType, UsersType } from "../types/types"
+import { ThunkAction } from 'redux-thunk';
 
 
 const FOLLOW = 'FOLLOW';
@@ -34,7 +38,7 @@ let initialState = {
 };
 type InitialStateType = typeof initialState;
 
-const usersReducer = (state = initialState, action: any): InitialStateType => {
+const usersReducer = (state = initialState, action: ActionsType): InitialStateType => {
    switch (action.type) {
       case FOLLOW:
          return {
@@ -79,7 +83,7 @@ const usersReducer = (state = initialState, action: any): InitialStateType => {
             ...state,
             followingInProcess: action.isFetching
                ? [...state.followingInProcess, action.userId]
-               : state.followingInProcess.filter(id => id != action.userId)
+               : state.followingInProcess.filter(id => id !== action.userId)
          }
 
 
@@ -87,6 +91,10 @@ const usersReducer = (state = initialState, action: any): InitialStateType => {
          return state;
    }
 }
+
+type ActionsType= FollowSuccessActionType|UnFollowSuccessActionType|SetUsersActionType| SetCurrentPageActionType|
+SetTotalUsersCountActionType|ToggleIsFetchingActionType|ToggleFollowingProcess;
+
 type FollowSuccessActionType = {
    type: typeof FOLLOW
    userId: number
@@ -126,10 +134,15 @@ type ToggleFollowingProcess = {
    isFetching: boolean
    userId: number
 }
-export const toggleFollowingProcess = (isFetching: boolean, userId: number): ToggleFollowingProcess => ({ type: TOGGLE_IS_FOLLOWING, isFetching, userId })
+export const toggleFollowingProcess = (isFetching: boolean, userId: number): ToggleFollowingProcess => 
+({ type: TOGGLE_IS_FOLLOWING, isFetching, userId })
 
 
-export const getUsers = (page: number, pageSize: number) => {   //thunk creator requestUsers
+// type GetStateType = ()=> AppStateType;
+// type DispatchType = Dispatch<ActionsType>;
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType >;
+
+export const getUsers = (page: number, pageSize: number): ThunkType => {   //thunk creator requestUsers
    // return (dispatch) => {   //thunk
    //    dispatch(toggleIsFetching(true));
    //    dispatch(setCurrentPage(page));
@@ -139,7 +152,8 @@ export const getUsers = (page: number, pageSize: number) => {   //thunk creator 
    //       dispatch(setTotalUsersCount(data.totalCount));
    //    });
    // }
-   return async (dispatch: any) => {   //thunk
+   // return async (dispatch: DispatchType, getState: GetStateType) => {   //thunk
+   return async (dispatch, getState) => {   //thunk
       dispatch(toggleIsFetching(true));
       dispatch(setCurrentPage(page));
       let data = await UserApi.getUsers(page, pageSize);
@@ -168,8 +182,8 @@ const followUnfollowFlow = async (dispatch: any, userId: number, apiMethod: any,
 //       dispatch(toggleFollowingProcess(false, userId));
 //    }
 // }
-export const follow = (userId: number) => {   //thunk creator
-   return async (dispatch: any) => {   //thunk
+export const follow = (userId: number): ThunkType => {   //thunk creator
+   return async (dispatch) => {   //thunk
       let apiMethod = UserApi.follow.bind(this);
       let actionCreator = followSuccess;
       followUnfollowFlow(dispatch, userId, apiMethod, actionCreator);
@@ -177,12 +191,12 @@ export const follow = (userId: number) => {   //thunk creator
 }
 
 
-export const unFollow = (userId: number) => {   //thunk creator
-   return (dispatch: any) => {   //thunk
+export const unFollow = (userId: number): ThunkType => {   //thunk creator
+   return async (dispatch) => {   //thunk
       dispatch(toggleFollowingProcess(true, userId));
       UserApi.unFollow(userId)
          .then(response => {
-            if (response.data.resultCode == 0) {
+            if (response.data.resultCode === 0) {
                dispatch(unFollowSuccess(userId));
             }
             dispatch(toggleFollowingProcess(false, userId));

@@ -1,5 +1,5 @@
-import { type } from "os";
-import { AuthAPI, securityAPI } from "../api/api"
+// import { type } from "os";
+import { AuthAPI, ResultCodeEnum, securityAPI } from "../api/api"
 
 const SET_USER_DATA = "auth/SET_USER_DATA";
 const GET_CAPTCHA_URL_SUCCESS = "security/GET_CAPTCHA_URL_SUCCESS";
@@ -61,7 +61,7 @@ export const setAuthUserData = (userId: number | null, email: string | null, log
       type: SET_USER_DATA, payload: { userId, email, login, isAuth }
    })
 // export const getAuthUserData = () => (dispatch) => { //thunk container  promise
-//    AuthAPI.me() // вернет промис
+//    AuthAPI.me() // 
 //       .then(response => {
 //          if (response.data.resultCode === 0) {
 //             dispatch(setAuthUserData(response.data.data.id, response.data.data.email, response.data.data.login, true))
@@ -78,7 +78,7 @@ export const getCaptchaUrlSuccess = (captchaUrl: string): GetCaptchaUrlSuccessAc
 export const getAuthUserData = () => async (dispatch: any) => { //thunk container async
    let response = await AuthAPI.me()
 
-   if (response.data.resultCode === 0) {
+   if (response.data.resultCode === ResultCodeEnum.Success) {
       dispatch(setAuthUserData(response.data.data.id, response.data.data.email, response.data.data.login, true))
    }
 
@@ -86,7 +86,7 @@ export const getAuthUserData = () => async (dispatch: any) => { //thunk containe
 
 // export const loginMe = (email, password, rememberMe) => (dispatch) => { //thunk container
 //    debugger;
-//    AuthAPI.loginMe(email, password, rememberMe) // вернет промис
+//    AuthAPI.loginMe(email, password, rememberMe) // 
 //       .then(response => {
 //          debugger;
 //          if (response.data.resultCode === 0) {
@@ -95,12 +95,12 @@ export const getAuthUserData = () => async (dispatch: any) => { //thunk containe
 //       });
 // }
 
-export const loginMe = (email: string, password: string, rememberMe: boolean, captcha: string | null) => async (dispatch: any) => { //thunk container
-   let response = await AuthAPI.loginMe(email, password, rememberMe, captcha) // вернет промис
-   if (response.data.resultCode === 0) {
+export const loginMe = (email: string, password: string, rememberMe: boolean, captcha: any) => async (dispatch: any) => { //thunk container
+   let response = await AuthAPI.loginMe(email, password, rememberMe, captcha) // promise
+   if (response.data.resultCode === ResultCodeEnum.Success) {
       dispatch(getAuthUserData())
    }
-   else if (response.data.resultCode === 10) {
+   else if (response.data.resultCode === ResultCodeEnum.CaptchaIsRequired) {
       dispatch(getCaptchaUrl())
    }
    // let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
@@ -114,7 +114,7 @@ export const getCaptchaUrl = () => async (dispatch: any) => {
 }
 
 export const logout = () => (dispatch: any) => { //thunk container
-   AuthAPI.logout() // вернет промис
+   AuthAPI.logout() //  promise
       .then(response => {
          if (response.data.resultCode === 0) {
             dispatch(setAuthUserData(null, null, null, false))
